@@ -1,4 +1,4 @@
-import network
+cimport network
 import urequests
 import os
 import json
@@ -9,7 +9,6 @@ class OTAUpdater:
     """ This class handles OTA updates. It connects to the Wi-Fi, checks for updates, downloads and installs them."""
     def __init__(self, ssid, password, firmware_url, filename):
         self.filename = filename
-        print(filename)
         self.ssid = ssid
         self.password = password
         self.repo_url = firmware_url
@@ -51,7 +50,6 @@ class OTAUpdater:
     
             # Save the fetched code to memory
             self.latest_code = response.text
-            print(response.text)
             return True
         
         elif response.status_code == 404:
@@ -76,25 +74,20 @@ class OTAUpdater:
         self.latest_code = None
 
         # Overwrite the old code.
-        os.rename('latest_code.py', self.filename)
-        
+#         os.rename('latest_code.py', self.filename)
+
+    def update_and_reset(self):
+        """ Update the code and reset the device."""
+
+        print(f"Updating device... (Renaming latest_code.py to {self.filename})", end="")
+
+        # Overwrite the old code.
+        os.rename('latest_code.py', self.filename)  
+
         # Restart the device to run the new code.
         print('Restarting device...')
         machine.reset()  # Reset the device to run the new code.
-#         
-
-#     def update_and_reset(self):
-#         """ Update the code and reset the device."""
-# 
-#         print(f"Updating device... (Renaming latest_code.py to {self.filename})", end="")
-# 
-#         # Overwrite the old code.
-#         os.rename('latest_code.py', self.filename)  
-# 
-#         # Restart the device to run the new code.
-#         print('Restarting device...')
-#         machine.reset()  # Reset the device to run the new code.
-#         
+        
     def check_for_updates(self):
         """ Check if updates are available."""
         

@@ -1,7 +1,7 @@
 from ota import OTAUpdater
 from WIFI_CONFIG import SSID, PASSWORD
 
-firmware_url = "https://github.com/mqttmra/OTA/"
+firmware_url = "http://192.168.26.68/OTA/"
 
 ota_updater = OTAUpdater(SSID, PASSWORD, firmware_url, "test.py")
 
